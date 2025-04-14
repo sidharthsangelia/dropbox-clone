@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "DropBox Clone🚀",
@@ -26,6 +27,7 @@ export default function RootLayout({
           >
             <Header />
             {children}
+            <Toaster/>
           </ThemeProvider>
         </body>
       </html>

@@ -3,8 +3,14 @@
 import { db, storage } from "@/firebase";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
-
-import { addDoc, collection, doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import toast from "react-hot-toast";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { useState } from "react";
@@ -12,7 +18,7 @@ import DropzoneComponent from "react-dropzone";
 
 function DropZone() {
   const [loading, setLoading] = useState(false);
-  const {isLoaded, isSignedIn, user} = useUser();
+  const { isLoaded, isSignedIn, user } = useUser();
   const onDrop = (acceptedFiles: File[]) => {
     acceptedFiles.forEach((file) => {
       const reader = new FileReader();
@@ -29,42 +35,38 @@ function DropZone() {
   };
 
   const uploadPost = async (selectedFile: File) => {
-    if (loading ) return;
-    if(!user) return;
-    setLoading(true);   
+    if (loading) return;
+    if (!user) return;
+    setLoading(true);
+    const toastId = toast.loading("Uploading file...");
 
-// do what needs to be done
-const docRef = await addDoc(collection(db, "users", user.id, "files"), {
-    userId: user.id,
-    filename: selectedFile.name,
-    fullName: user.fullName,
-    profileImg: user.imageUrl,
-    timeStamp: serverTimestamp(),
-    type: selectedFile.type,
-    size: selectedFile.size,
-
-})
-
-const imageRef = ref(storage, `users/${user.id}/files/${docRef.id}`);
-
-uploadBytes (imageRef, selectedFile).then(async (snapshot) => {
-    const downloadURL = await getDownloadURL(imageRef);
-
-    await updateDoc(doc(db, "users", user.id, "files", docRef.id), {
-downloadURL: downloadURL,
+    // do what needs to be done
+    const docRef = await addDoc(collection(db, "users", user.id, "files"), {
+      userId: user.id,
+      filename: selectedFile.name,
+      fullName: user.fullName,
+      profileImg: user.imageUrl,
+      timeStamp: serverTimestamp(),
+      type: selectedFile.type,
+      size: selectedFile.size,
     });
-});
 
+    const imageRef = ref(storage, `users/${user.id}/files/${docRef.id}`);
+
+    uploadBytes(imageRef, selectedFile).then(async (snapshot) => {
+      const downloadURL = await getDownloadURL(imageRef);
+
+      await updateDoc(doc(db, "users", user.id, "files", docRef.id), {
+        downloadURL: downloadURL,
+      });
+    });
+    toast.success("Deleted successfully!", { id: toastId });
     setLoading(false);
   };
   const maxSize = 20971520;
 
   return (
-    <DropzoneComponent
-      minSize={0}
-      maxSize={maxSize}
-      onDrop={onDrop}
-    >
+    <DropzoneComponent minSize={0} maxSize={maxSize} onDrop={onDrop}>
       {({
         getRootProps,
         getInputProps,
