@@ -33,10 +33,10 @@ function Header() {
 
         <SignedOut>
           {/* Shows only when signed out */}
-          <div className="cursor-pointer">
+          <div className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-blue-400 rounded-lg hover:bg-blue-400/20 transition-all duration-300 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 active:scale-95 cursor-pointer">
             <SignInButton mode="modal" />
           </div>
-          <div className="cursor-pointer">
+          <div className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-md hover:scale-105 hover:shadow-blue-500/40 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 active:scale-95 cursor-pointer">
             <SignUpButton mode="modal" />
           </div>
         </SignedOut>
