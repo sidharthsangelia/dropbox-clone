@@ -10,7 +10,7 @@ export default function Footer() {
       <div className="flex flex-col items-center space-y-6">
         {/* Signature text */}
         <p className="text-sm text-gray-400 text-center">
-          🚀 Built with <span className="text-pink-400">React</span>, crafted with ☕ & ❤️ by{" "}
+          🚀 Built with <span className="text-pink-400">Next.Js</span>, crafted with ☕ & ❤️ by{" "}
           <span className="text-white font-semibold underline underline-offset-4 decoration-blue-500">
             Sidharth Sangelia
           </span>
