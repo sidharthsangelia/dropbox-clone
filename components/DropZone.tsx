@@ -18,7 +18,7 @@ import DropzoneComponent from "react-dropzone";
 
 function DropZone() {
   const [loading, setLoading] = useState(false);
-  const { isLoaded, isSignedIn, user } = useUser();
+  const {  user } = useUser();
   const onDrop = (acceptedFiles: File[]) => {
     acceptedFiles.forEach((file) => {
       const reader = new FileReader();
