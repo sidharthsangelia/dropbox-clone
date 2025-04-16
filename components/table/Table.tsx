@@ -19,7 +19,7 @@ import { Button } from "../ui/button";
 import { PencilIcon, TrashIcon } from "lucide-react";
 import { FileType } from "@/typings";
 import { useAppStore } from "@/store/store";
-import { shallow, useShallow } from "zustand/shallow";
+import { useShallow } from "zustand/shallow";
 import { DeleteModal } from "../DeleteModal";
 import RenameModal from "../RenameModal";
 

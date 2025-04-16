@@ -4,18 +4,15 @@ import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { db, storage } from "@/firebase";
 import { useAppStore } from "@/store/store";
 import { useUser } from "@clerk/nextjs";
-import { is } from "date-fns/locale";
+
 import { deleteDoc, doc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
 import { useShallow } from "zustand/shallow";
@@ -36,7 +33,7 @@ export function DeleteModal() {
 
   async function deleteFile() {
     if (!user || !fileId) return;
-    const toastId = toast.loading("Deleting file...")
+    const toastId = toast.loading("Deleting file...");
     const fileRef = ref(storage, `users/${user.id}/files/${fileId}`);
 
     try {
