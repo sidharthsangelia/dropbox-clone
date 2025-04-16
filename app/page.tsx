@@ -1,3 +1,6 @@
+import FeaturesSection from "@/components/FeaturesSection";
+import HowItWorks from "@/components/HowItWorksSection";
+import TestimonialSection from "@/components/TestimonialSection";
 import { ArrowRight } from "lucide-react";
 
 import Link from "next/link";
@@ -22,28 +25,31 @@ export default function Home() {
             solution.
           </p>
 
-          <Link href="/dashboard" className="flex bg-blue-500 p-5 w-fit rounded-sm">
-            Try it for free
-            <ArrowRight className="ml-10" />
-          </Link>
+          <Link
+  href="/dashboard"
+  className="group inline-flex items-center justify-center gap-3 px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-blue-500/40 max-w-[200px]"
+>
+  <span className="font-semibold text-sm tracking-tight">
+    Try it for free
+  </span>
+  <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+</Link>
         </div>
 
         <div className="bg-[#1e1919] dark:bg-slate-800 h-full p-10">
           <video autoPlay loop muted className="rounded-lg w-full">
-            <source src="https://aem.dropbox.com/cms/content/dam/dropbox/warp/en-us/test/homepageredesign2024/features/docsend/user-interface/webm/docsend-permissioning-ui-1080xauto-en_GB.webm"/>
+            <source src="https://aem.dropbox.com/cms/content/dam/dropbox/warp/en-us/test/homepageredesign2024/features/docsend/user-interface/webm/docsend-permissioning-ui-1080xauto-en_GB.webm" />
             your borser does not support the video tag
           </video>
         </div>
       </div>
+      {/* Features section */}
+      <FeaturesSection />
 
-      <p className="text-center font-bold text-xl pt-5">Disclaimer</p>
-      <p className="text-center font-light p-2">
-        This video is made for informational and educational purposes only. We
-        do not own or affiliate with Dropbox or/and any of its subsidiaries in
-        any form. Copyright Disclaimer under section 107 of the Copyright Act
-        1976, allowance is made for “fair use” of this video for education
-        purposes.
-      </p>
+      {/* how it workds section */}
+      <HowItWorks />
+
+      <TestimonialSection />
     </main>
   );
 }
