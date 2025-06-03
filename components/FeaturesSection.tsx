@@ -144,7 +144,7 @@ export default function Features() {
               Absolute Privacy Control
             </h3>
             <p className="text-base text-[var(--muted-foreground)] font-sans">
-              Your privacy, guaranteed. End-to-End encryption ensures only you and your recipients access shared files.
+              Your privacy, guaranteed. End-to-end encryption ensures only you and your recipients access shared files.
             </p>
           </div>
         </div>
