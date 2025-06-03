@@ -20,11 +20,15 @@ export default async function Page() {
     fullName: doc.data().fullName,
   }));
   return (
-    <div className="border-1">
+    // Apply background color from theme and add subtle padding
+    <div className="min-h-screen bg-[var(--background)] p-4 sm:p-6 lg:p-8">
       <DropZone />
 
-      <section className="container space-y-5">
-        <h2 className="font-bold">All Files</h2>
+      <section className="container space-y-6 mt-8">
+        {/* Use foreground color for headings and a modern sans-serif font */}
+        <h2 className="text-2xl sm:text-3xl font-bold text-[var(--foreground)] font-sans">
+          All Files
+        </h2>
         <div>
           <TableWrapper skeletonFiles={skeletonFiles} />
         </div>

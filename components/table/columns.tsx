@@ -37,24 +37,27 @@ export const columns: ColumnDef<FileType>[] = [
     cell: ({ row }) => {
       const rawDate = row.getValue("timestamp") as string | number | Date;
       const formatted = format(new Date(rawDate), "dd MMM yyyy, h:mm a");
-      return <span>{formatted}</span>;
+      // Apply foreground color and sans-serif font
+      return <span className="text-[var(--foreground)] font-sans">{formatted}</span>;
     },
   },
   {
     accessorKey: "size",
     header: "Size",
     cell: ({ renderValue, ...props }) => {
-      return <span>{prettyBytes(renderValue() as number)}</span>;
+      // Apply foreground color and sans-serif font
+      return <span className="text-[var(--foreground)] font-sans">{prettyBytes(renderValue() as number)}</span>;
     },
   },
   {
     accessorKey: "downloadURL",
     header: "Link",
     cell: ({ renderValue, ...props }) => (
+      // Use primary color for links and hover effect
       <a
         href={renderValue() as string}
         target="_blank"
-        className="text-blue-500 hover:text-blue-700"
+        className="text-[var(--primary)] hover:text-[var(--primary)]/80 transition-colors duration-200"
       >
         Download
       </a>

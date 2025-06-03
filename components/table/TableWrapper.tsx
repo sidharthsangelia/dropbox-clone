@@ -17,9 +17,11 @@ function TableWrapper({ skeletonFiles }: { skeletonFiles: FileType[] }) {
   const [sort, setSort] = useState<"asc" | "desc">("desc");
 
   const [docs, loading, error] = useCollection(
-    user && query(collection(db, "users", user.id,"files"), 
-    // orderBy("timestamp", sort)
-    )
+    user &&
+      query(
+        collection(db, "users", user.id, "files"),
+        // orderBy("timestamp", sort) // Re-enable if you want client-side sorting via Firebase query
+      )
   );
 
   useEffect(() => {
@@ -53,25 +55,38 @@ function TableWrapper({ skeletonFiles }: { skeletonFiles: FileType[] }) {
 
   if (docs?.docs.length === undefined || loading) {
     return (
-      <div className="flex flex-col">
-        <Button variant={"outline"} className="ml-auto w-36 h-10 mb-5">
-          <Skeleton className="h-5 w-full" />
+      <div className="flex flex-col p-4 sm:p-6"> {/* Added padding here */}
+        {/* Changed button to use primary colors directly for better visibility */}
+        <Button
+          variant={"default"} // Changed to default for a solid background
+          className="ml-auto w-36 h-10 mb-5 bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]/90 rounded-[var(--radius)] font-sans"
+        >
+          <Skeleton className="h-5 w-full bg-[var(--primary-foreground)]/50" />
         </Button>
-        <div className="border rounded-b-lg">
-          <div className="border-b h-12" />
+        {/* Apply border and rounded corners from theme */}
+        <div
+          className="border rounded-lg overflow-hidden" // Added overflow-hidden to contain inner elements within radius
+          style={{ borderColor: "var(--border)" }}
+        >
+          <div
+            className="border-b h-12 bg-[var(--muted)]" // Added muted background to skeleton header
+            style={{ borderColor: "var(--border)" }}
+          />
           {skeletonFiles.map((file) => (
             <div
               key={file.id}
-              className="flex items-center space-x-4 p-5 w-full"
+              className="flex items-center space-x-4 p-5 w-full bg-[var(--card)] border-b last:border-b-0" // Card background for rows, border-b for separation
+              style={{ borderColor: "var(--border)" }}
             >
-              <Skeleton className="h-12 w-12" />
-              <Skeleton className="h-12 w-full" />
+              {/* Skeletons using muted and accent for visual distinction */}
+              <Skeleton className="h-10 w-10 rounded-md bg-[var(--muted)]" /> {/* Slightly smaller skeleton icons */}
+              <Skeleton className="h-10 w-full rounded-md bg-[var(--accent)]" />
             </div>
           ))}
           {skeletonFiles.length === 0 && (
-            <div className="flex items-center space-x-4 p-5 w-full">
-              <Skeleton className="h-12 w-12" />
-              <Skeleton className="h-12 w-full" />
+            <div className="flex items-center space-x-4 p-5 w-full bg-[var(--card)]">
+              <Skeleton className="h-10 w-10 rounded-md bg-[var(--muted)]" />
+              <Skeleton className="h-10 w-full rounded-md bg-[var(--accent)]" />
             </div>
           )}
         </div>
@@ -81,15 +96,21 @@ function TableWrapper({ skeletonFiles }: { skeletonFiles: FileType[] }) {
 
   if (error) {
     console.error("TableWrapper: Firebase error", error); // Debug
-    return <div>Error loading files: {error.message}</div>;
+    // Use destructive color for error messages
+    return (
+      <div className="text-[var(--destructive-foreground)] bg-[var(--destructive)] p-4 rounded-md">
+        Error loading files: {error.message}
+      </div>
+    );
   }
 
   return (
-    <div className="flex flex-col space-y-5 p-10">
+    <div className="flex flex-col space-y-5 p-4 sm:p-6"> {/* Added padding to the container */}
+      {/* Button styling reflecting primary and foreground colors, increased padding */}
       <Button
-        variant={"outline"}
+        variant={"default"} // Changed to default for a solid background
         onClick={() => setSort(sort === "desc" ? "asc" : "desc")}
-        className="cursor-pointer ml-auto w-fit"
+        className="cursor-pointer ml-auto w-fit px-6 py-2 bg-[var(--primary)] text-[var(--primary-foreground)] hover:bg-[var(--primary)]/90 hover:text-[var(--primary-foreground)] rounded-[var(--radius)] font-sans shadow-[var(--shadow-sm)] transition-all duration-200"
       >
         Sort By...{sort === "desc" ? "Newest" : "Oldest"}
       </Button>

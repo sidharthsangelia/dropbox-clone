@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import logo from '@/public/dropbox.png';
+import logo from '@/public/Dropify.png';
 import {
   SignedIn,
   SignedOut,
@@ -11,36 +11,72 @@ import {
   UserButton,
 } from '@clerk/nextjs';
 import { ThemeToggler } from './ThemeToggler';
+import { useState } from 'react';
+import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <header className="flex items-center justify-between p-4 shadow">
-      {/* Logo & App Name */}
-      <Link href="/" className="flex items-center space-x-2">
-        <Image src={logo} alt="logo" height={50} width={50} />
-        <h1 className="font-bold text-xl">DropBox</h1>
-      </Link>
+    <header className="sticky top-0 z-50 w-full border-b bg-background backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center space-x-2">
+          <Image src={logo} alt="Dropify Logo" width={40} height={40} />
+          <span className="text-xl md:text-2xl font-semibold tracking-tight">
+            Dropify
+          </span>
+        </Link>
 
-      {/* Auth Buttons */}
-      <div className="flex  space-x-2 items-center">
-        <ThemeToggler/>
-        <SignedIn>
-          {/* Shows only when signed in */}
-          <div className="cursor-pointer">
-            <UserButton />
-          </div>
-        </SignedIn>
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-muted-foreground"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
 
-        <SignedOut>
-          {/* Shows only when signed out */}
-          <div className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white border border-blue-400 rounded-lg hover:bg-blue-400/20 transition-all duration-300 hover:scale-105 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 active:scale-95 cursor-pointer">
-            <SignInButton mode="modal" />
-          </div>
-          <div className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-md hover:scale-105 hover:shadow-blue-500/40 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 active:scale-95 cursor-pointer">
-            <SignUpButton mode="modal" />
-          </div>
-        </SignedOut>
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center space-x-4">
+          <ThemeToggler />
+
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+
+          <SignedOut>
+            <SignInButton mode="modal">
+              <Button variant="ghost">Sign In</Button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <Button>Get Started</Button>
+            </SignUpButton>
+          </SignedOut>
+        </nav>
       </div>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden px-4 pb-4 flex flex-col space-y-3 animate-fade-in">
+          <ThemeToggler />
+
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+
+          <SignedOut>
+            <SignInButton mode="modal">
+              <Button variant="ghost" className="w-full justify-start">
+                Sign In
+              </Button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <Button className="w-full justify-start">Get Started</Button>
+            </SignUpButton>
+          </SignedOut>
+        </div>
+      )}
     </header>
   );
 }

@@ -61,14 +61,28 @@ export function DataTable<TData, TValue>({
   };
 
   return (
-    <div className="rounded-md border">
+    // Apply rounded corners and border color from theme, and subtle shadow
+    <div
+      className="rounded-[var(--radius)] border overflow-hidden shadow-[var(--shadow-sm)]" // Added overflow-hidden and shadow
+      style={{ borderColor: "var(--border)" }}
+    >
       <Table>
-        <TableHeader>
+        {/* Stronger background for TableHeader for better distinction */}
+        <TableHeader className="bg-[var(--secondary)]">
           {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
+            // Apply border from theme for header rows
+            <TableRow
+              key={headerGroup.id}
+              className="border-b"
+              style={{ borderColor: "var(--border)" }}
+            >
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  // Apply foreground and font styles for header cells
+                  <TableHead
+                    key={header.id}
+                    className="text-[var(--secondary-foreground)] font-bold text-left p-4 font-sans uppercase tracking-wide" // Increased font-weight, added uppercase and tracking
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -81,19 +95,23 @@ export function DataTable<TData, TValue>({
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody>
+        {/* Table body with card background and subtle row hover effect */}
+        <TableBody className="bg-[var(--card)] text-[var(--card-foreground)]">
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
+                className="border-b hover:bg-[var(--muted)]/50 transition-colors duration-200" // Subtle hover effect
+                style={{ borderColor: "var(--border)" }}
               >
                 <DeleteModal />
                 <RenameModal />
 
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                  <TableCell key={cell.id} className="p-4 font-sans"> {/* Applied font-sans here too */}
                     {cell.column.id === "filename" ? (
+                      // Styling for clickable filename with primary color
                       <p
                         onClick={() => {
                           openRenameModal(
@@ -101,31 +119,36 @@ export function DataTable<TData, TValue>({
                             (row.original as FileType).filename
                           );
                         }}
-                        className="underline flex items-center text-blue-500 hover:text-blue-600 hover:cursor-pointer"
+                        className="underline flex items-center text-[var(--primary)] hover:text-[var(--primary)]/80 hover:cursor-pointer transition-colors duration-200 font-sans"
                       >
                         {cell.getValue() as string}{" "}
-                        <PencilIcon size={15} className="ml-2" />
+                        <PencilIcon size={15} className="ml-2 text-[var(--primary)]" /> {/* Ensure icon color matches text */}
                       </p>
                     ) : (
                       flexRender(cell.column.columnDef.cell, cell.getContext())
                     )}
                   </TableCell>
                 ))}
-                <TableCell>
+                <TableCell className="p-4">
+                  {/* Destructive button variant for delete, with proper sizing and radius */}
                   <Button
-                    variant={"outline"}
+                    variant={"outline"} // Reverted to outline, but with explicit strong colors
                     onClick={() => {
                       openDeleteModal((row.original as FileType).id);
                     }}
+                    className="h-9 w-9 p-0 flex items-center justify-center rounded-[var(--radius-sm)] bg-[var(--destructive)] text-[var(--destructive-foreground)] hover:bg-[var(--destructive)]/90 hover:text-[var(--destructive-foreground)] transition-colors duration-200"
                   >
-                    <TrashIcon size={20} />
+                    <TrashIcon className="text-red-500"size={20} />
                   </Button>
                 </TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
+              <TableCell
+                colSpan={columns.length}
+                className="h-24 text-center text-[var(--muted-foreground)] font-sans italic" // Muted foreground for "no files" message
+              >
                 You have no files......
               </TableCell>
             </TableRow>

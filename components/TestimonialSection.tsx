@@ -1,79 +1,77 @@
-
-import { User } from "lucide-react"; // Optional icon
 import { Card, CardHeader } from "./ui/card";
 
 export default function Testimonials() {
   return (
-    <section className="py-16 bg-slate-100 dark:bg-slate-900">
+    <section className="py-24 bg-slate-100 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl font-semibold text-center text-slate-900 dark:text-slate-100 mb-10">
-          What Our Users Say
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Testimonial 1 */}
-          <Card className="bg-slate-200 dark:bg-slate-700 shadow-xl rounded-lg p-6">
-            <CardHeader className="flex items-center space-x-4 mb-6">
-              <img
-                src="https://randomuser.me/api/portraits/men/75.jpg"
-                alt="User 1"
-                className="w-16 h-16 rounded-full object-cover"
-              />
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">John Doe</h3>
-                <p className="text-slate-600 dark:text-slate-300">Software Developer</p>
-              </div>
-            </CardHeader>
-            <div>
-              <p className="text-slate-600 dark:text-slate-300">
-                "Dropbox has transformed the way I manage my files. The easy file sharing and seamless
-                syncing across devices make it my go-to solution for all my projects."
-              </p>
-            </div>
-          </Card>
-          
-          {/* Testimonial 2 */}
-          <Card className="bg-slate-200 dark:bg-slate-700 shadow-xl rounded-lg p-6">
-            <CardHeader className="flex items-center space-x-4 mb-6">
-              <img
-                src="https://randomuser.me/api/portraits/women/68.jpg"
-                alt="User 2"
-                className="w-16 h-16 rounded-full object-cover"
-              />
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Jane Smith</h3>
-                <p className="text-slate-600 dark:text-slate-300">Digital Marketer</p>
-              </div>
-            </CardHeader>
-            <div>
-              <p className="text-slate-600 dark:text-slate-300">
-                "With Dropbox, I can easily share large files with my team, collaborate in real-time, and
-                feel confident that all my work is securely backed up."
-              </p>
-            </div>
-          </Card>
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-slate-900 dark:text-white">
+            What Our Users Say
+          </h2>
+          <p className="text-slate-600 dark:text-slate-400 mt-4 max-w-2xl mx-auto">
+            Real stories from people who rely on us to power their workflow,
+            boost productivity, and grow their businesses.
+          </p>
+        </div>
 
-          {/* Testimonial 3 */}
-          <Card className="bg-slate-200 dark:bg-slate-700 shadow-xl rounded-lg p-6">
-            <CardHeader className="flex items-center space-x-4 mb-6">
-              <img
-                src="https://randomuser.me/api/portraits/men/56.jpg"
-                alt="User 3"
-                className="w-16 h-16 rounded-full object-cover"
-              />
-              <div>
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">Michael Lee</h3>
-                <p className="text-slate-600 dark:text-slate-300">Entrepreneur</p>
+        <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {testimonials.map((testimonial, index) => (
+            <Card
+              key={index}
+              className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow"
+            >
+              <CardHeader className="flex items-center gap-4 mb-4 p-0">
+                <img
+                  src={testimonial.avatar}
+                  alt={`${testimonial.name}'s profile`}
+                  className="w-14 h-14 rounded-full object-cover border border-slate-300 dark:border-slate-600"
+                />
+                <div>
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                    {testimonial.name}
+                  </h3>
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                    {testimonial.role}
+                  </p>
+                </div>
+              </CardHeader>
+              <div className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed">
+                “{testimonial.feedback}”
               </div>
-            </CardHeader>
-            <div>
-              <p className="text-slate-600 dark:text-slate-300">
-                "Dropbox has been a lifesaver! I can access my documents from anywhere, making my business
-                operations smooth and efficient."
-              </p>
-            </div>
-          </Card>
+              {/* Optional rating section */}
+              {/* <div className="mt-4 flex gap-1 text-yellow-400">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-yellow-400" />
+                ))}
+              </div> */}
+            </Card>
+          ))}
         </div>
       </div>
     </section>
   );
 }
+
+const testimonials = [
+  {
+    name: "John Doe",
+    role: "Software Developer",
+    avatar: "https://randomuser.me/api/portraits/men/75.jpg",
+    feedback:
+      "This app has transformed the way I manage projects. It’s fast, reliable, and incredibly easy to use.",
+  },
+  {
+    name: "Jane Smith",
+    role: "Digital Marketer",
+    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+    feedback:
+      "A game-changer! I can share assets with my team in seconds and everything stays organized. Highly recommend.",
+  },
+  {
+    name: "Michael Lee",
+    role: "Entrepreneur",
+    avatar: "https://randomuser.me/api/portraits/men/56.jpg",
+    feedback:
+      "I run my entire business on this platform. The collaboration tools and speed are unmatched.",
+  },
+];
