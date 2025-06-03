@@ -64,7 +64,7 @@ export default function Features() {
               Effortless File Management
             </h3>
             <p className="text-base text-[var(--muted-foreground)] font-sans">
-              Streamline your workflow. Organize, upload, and access all your documents and media with intuitive ease.
+              Streamline your workflow. Organize, upload, and access all your documents and media with intuitive ease .
             </p>
           </div>
 
