@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "Dropify - Your Digital Sanctuary",
@@ -56,6 +57,7 @@ export default function RootLayout({
           >
             <Header />
             {children}
+            <Analytics/>
             <Toaster />
             <Footer />
           </ThemeProvider>
